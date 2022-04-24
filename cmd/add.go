@@ -29,11 +29,29 @@ var addCmd = &cobra.Command{
 	Long:  `Again I think the short description is enough!`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("add called")
-		addInt(args)
+		flag, _ := cmd.Flags().GetBool("float")
+		if flag {
+			addFloat(args)
+		} else {
+			addInt(args)
+		}
 	},
 }
 
 func addInt(args []string) {
+	var sum int
+	for _, value := range args {
+		value, err := strconv.Atoi(value)
+		if err == nil {
+			sum = sum + value
+		} else {
+			fmt.Println(err)
+		}
+	}
+	fmt.Printf("The addition of numbers %s is %d \n", args, sum)
+}
+
+func addFloat(args []string) {
 	var sum float64
 	for _, value := range args {
 		value, err := strconv.ParseFloat(value, 64)
@@ -43,11 +61,12 @@ func addInt(args []string) {
 			fmt.Println(err)
 		}
 	}
-	fmt.Printf("The addition of numbers %s is %v \n", args, sum)
+	fmt.Printf("The addition of numbers %s is %f \n", args, sum)
 }
 
 func init() {
 	rootCmd.AddCommand(addCmd)
+	addCmd.Flags().BoolP("float", "f", false, "Add floating numbers")
 
 	// Here you will define your flags and configuration settings.
 
