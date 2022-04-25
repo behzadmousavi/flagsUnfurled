@@ -25,8 +25,8 @@ import (
 // addCmd represents the add command
 var addCmd = &cobra.Command{
 	Use:   "add",
-	Short: "This is going to sum up two number per se",
-	Long:  `Again I think the short description is enough!`,
+	Short: "Sum up numbers",
+	Long:  `This is going to sum up numbers of inputs`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("add called")
 		flag, _ := cmd.Flags().GetBool("float")
